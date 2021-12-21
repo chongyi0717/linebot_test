@@ -45,7 +45,6 @@ def pixabay_isch(event):
             req = urllib.request.Request(url, headers = headers)
             conn = urllib.request.urlopen(req)
             
-            print('fetch page finish')
             
             pattern = 'img srcset="\S*\s\w*,'
             img_list = []
@@ -54,8 +53,6 @@ def pixabay_isch(event):
                 img_list.append(match.group()[12:-3])
                 
             random_img_url = img_list[random.randint(0, len(img_list)+1)]
-            print('fetch img url finish')
-            print(random_img_url)
             
             line_bot_api.reply_message(
                 event.reply_token,
