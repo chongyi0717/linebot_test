@@ -3,8 +3,13 @@ import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+import configparser
+
+import urllib
+import re
+import random
 
 app = Flask(__name__)
 
@@ -30,21 +35,42 @@ def callback():
 
 # 學你說話
 @handler.add(MessageEvent, message=TextMessage)
-def echo(event):
+def pixabay_isch(event):
     
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        pretty_note = '♫'
-        pretty_text = ''
-        
-        for i in event.message.text:
-
-            pretty_text += i
-            pretty_text += pretty_note
-
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=pretty_text)
-        )
+        try:
+            url = f"https://pixabay.com/images/search/{urllib.parse.urlencode({'q':event.message.text})[2:]}/"
+            headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
+            
+            req = urllib.request.Request(url, headers = headers)
+            conn = urllib.request.urlopen(req)
+            
+            print('fetch page finish')
+            
+            pattern = 'img srcset="\S*\s\w*,'
+            img_list = []
+            
+            for match in re.finditer(pattern, str(conn.read())):
+                img_list.append(match.group()[12:-3])
+                
+            random_img_url = img_list[random.randint(0, len(img_list)+1)]
+            print('fetch img url finish')
+            print(random_img_url)
+            
+            line_bot_api.reply_message(
+                event.reply_token,
+                ImageSendMessage(
+                    original_content_url=random_img_url,
+                    preview_image_url=random_img_url
+                )
+            )
+        # 如果找不到圖，就學你說話
+        except:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=event.message.text)
+            )
+            pass
 
 if __name__ == "__main__":
     app.run()
