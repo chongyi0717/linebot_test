@@ -34,7 +34,7 @@ def pretty_echo(event):
     
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
         
-        pretty_note = '♫♪♬'
+        pretty_note = 'abc'
         pretty_text = ''
         
         for i in event.message.text:
