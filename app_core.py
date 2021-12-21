@@ -9,8 +9,9 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 app = Flask(__name__)
 
 # LINE 聊天機器人的基本資料
-line_bot_api = LineBotApi('聊天機器人的 Chennel access token')
-handler = WebhookHandler('聊天機器人的 Channel secret')
+line_bot_api = LineBotApi('ToflcXGuE9cm5WmDysvWWVPSSM2KCRe8k7bVP5EjF12yuXqqBSorgzDsEbxrSFp3ZL5KCTuZGXFyYvHht1sWd2AZMrbyYB1Po+yjWgDjSzBrBAkB43RDeuk6FhH12Kvv1s1YNF3QfVv1TBZAcjG6XwdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('5186fcb8bf05dc424db1e061775f4239')
+
 
 # 接收 LINE 的資訊
 @app.route("/callback", methods=['POST'])
@@ -23,7 +24,7 @@ def callback():
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
-        abort(200)
+        abort(400)
 
     return 'OK'
 
