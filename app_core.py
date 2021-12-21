@@ -9,9 +9,8 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage
 app = Flask(__name__)
 
 # LINE 聊天機器人的基本資料
-line_bot_api = LineBotApi('ToflcXGuE9cm5WmDysvWWVPSSM2KCRe8k7bVP5EjF12yuXqqBSorgzDsEbxrSFp3ZL5KCTuZGXFyYvHht1sWd2AZMrbyYB1Po+yjWgDjSzBrBAkB43RDeuk6FhH12Kvv1s1YNF3QfVv1TBZAcjG6XwdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('5186fcb8bf05dc424db1e061775f4239')
-
+line_bot_api = LineBotApi('聊天機器人的 Chennel access token')
+handler = WebhookHandler('聊天機器人的 Channel secret')
 
 # 接收 LINE 的資訊
 @app.route("/callback", methods=['POST'])
@@ -30,21 +29,12 @@ def callback():
 
 # 學你說話
 @handler.add(MessageEvent, message=TextMessage)
-def pretty_echo(event):
+def echo(event):
     
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        
-        pretty_note = '♫♪♬'
-        pretty_text = ''
-        
-        for i in event.message.text:
-        
-            pretty_text += i
-            pretty_text += random.choice(pretty_note)
-    
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=pretty_text)
+            TextSendMessage(text=event.message.text)
         )
 
 if __name__ == "__main__":
