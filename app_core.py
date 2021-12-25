@@ -1,6 +1,4 @@
 from __future__ import unicode_literals
-import os
-import sys
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError
@@ -35,14 +33,6 @@ machine = TocMachine(
 # LINE 聊天機器人的基本資料
 channel_secret='5186fcb8bf05dc424db1e061775f4239'
 channel_access_token='ToflcXGuE9cm5WmDysvWWVPSSM2KCRe8k7bVP5EjF12yuXqqBSorgzDsEbxrSFp3ZL5KCTuZGXFyYvHht1sWd2AZMrbyYB1Po+yjWgDjSzBrBAkB43RDeuk6FhH12Kvv1s1YNF3QfVv1TBZAcjG6XwdB04t89/1O/w1cDnyilFU='
-
-if channel_secret is None:
-    print("Specify LINE_CHANNEL_SECRET as environment variable.")
-    sys.exit(1)
-if channel_access_token is None:
-    print("Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.")
-    sys.exit(1)
-
 line_bot_api = LineBotApi(channel_access_token)
 parser=WebhookParser(channel_secret)
 
@@ -50,25 +40,25 @@ parser=WebhookParser(channel_secret)
 # 接收 LINE 的資訊
 @app.route("/callback", methods=['POST'])
 def callback():
-    signature = request.headers['X-Line-Signature']
+    # signature = request.headers['X-Line-Signature']
 
-    body = request.get_data(as_text=True)
+    # body = request.get_data(as_text=True)
     
-    app.logger.info("Request body: " + body)
+    # app.logger.info("Request body: " + body)
     
-    try:
-        events = parser.parse(body, signature)
-    except InvalidSignatureError:
-        abort(400)
-    for event in events:
-        if not isinstance(event, MessageEvent):
-            continue
-        if not isinstance(event.message, TextMessage):
-            continue
+    # try:
+    #     events = parser.parse(body, signature)
+    # except InvalidSignatureError:
+    #     abort(400)
+    # for event in events:
+    #     if not isinstance(event, MessageEvent):
+    #         continue
+    #     if not isinstance(event.message, TextMessage):
+    #         continue
 
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.message.text)
-        )
+    #     line_bot_api.reply_message(
+    #         event.reply_token, TextSendMessage(text=event.message.text)
+    #     )
     return 'OK'
 
 @app.route("/webhook", methods=["POST"])
