@@ -7,31 +7,32 @@ from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 from fsm import TocMachine
+from utils import send_text_message
 import configparser
 app = Flask(__name__)
 
 load_dotenv()
-machine = TocMachine(
-    states=["user", "state1", "state2"],
-    transitions=[
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
-        },
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
-        },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
-    ],
-    initial="user",
-    auto_transitions=False,
-    show_conditions=True,
-)
+# machine = TocMachine(
+#     states=["user", "state1", "state2"],
+#     transitions=[
+#         {
+#             "trigger": "advance",
+#             "source": "user",
+#             "dest": "state1",
+#             "conditions": "is_going_to_state1",
+#         },
+#         {
+#             "trigger": "advance",
+#             "source": "user",
+#             "dest": "state2",
+#             "conditions": "is_going_to_state2",
+#         },
+#         {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+#     ],
+#     initial="user",
+#     auto_transitions=False,
+#     show_conditions=True,
+# )
 # LINE 聊天機器人的基本資料
 channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
 channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
