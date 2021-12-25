@@ -87,6 +87,10 @@ def handle_message(event):
                                     MessageTemplateAction(
                                         label='越式',
                                         text='越式'
+                                    ),
+                                     MessageTemplateAction(
+                                        label='隨機',
+                                        text='隨機'
                                     )
                                 ]
                             )
