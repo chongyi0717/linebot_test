@@ -58,32 +58,7 @@ def handle_message(event):
     msg = event.message.text
     #print(type(msg))
     msg = msg.encode('utf-8')
-    if event.message.text == "最新電影":
-    #加上傳送至Chatbase的程式
-        chatbase_msg = Message(api_key="",
-              type="user",
-              platform="Line",
-              version="1.0",
-              user_id="",
-              message=event.message.text,
-              intent="movie"
-              )
-        resp =chatbase_msg.send()
-        print(resp)
-        a=movie()
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=a))
-    if event.message.text == "你好":
-    #加上傳送至Chatbase的程式
-        chatbase_msg = Message(api_key="",
-              type="user",
-              platform="Line",
-              version="1.0",
-              user_id="",
-              message=event.message.text,
-              intent="Hello"
-              )
-        resp =chatbase_msg.send()
-        print(resp)
+    if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
 
 # 學你說話
