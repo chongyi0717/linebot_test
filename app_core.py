@@ -45,8 +45,8 @@ def handle_message(event):
         elif(event.message.text == "圖片"):
             line_bot_api.reply_message(
                 event.reply_token,ImageSendMessage(
-                    original_content_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png",
-                    preview_image_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png"
+                    original_content_url="https://www.google.com/search?q=jpg&tbm=isch&ved=2ahUKEwiko5KVzP70AhUUUd4KHa2LAyYQ2-cCegQIABAA&oq=jpg&gs_lcp=CgNpbWcQAzIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6BwgjEO8DECdQ4QlYzQtgxiNoAHAAeACAAY8BiAG-A5IBAzEuM5gBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=ot7GYaTKJJSi-Qatl46wAg&bih=722&biw=1536#imgrc=FTNRQa46SomhwM",
+                    preview_image_url="https://www.google.com/search?q=jpg&tbm=isch&ved=2ahUKEwiko5KVzP70AhUUUd4KHa2LAyYQ2-cCegQIABAA&oq=jpg&gs_lcp=CgNpbWcQAzIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6BwgjEO8DECdQ4QlYzQtgxiNoAHAAeACAAY8BiAG-A5IBAzEuM5gBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=ot7GYaTKJJSi-Qatl46wAg&bih=722&biw=1536#imgrc=FTNRQa46SomhwM"
                 )
             )
         elif event.message.text == "影片":
