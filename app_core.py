@@ -4,6 +4,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
+from fsm import TocMachine
 import configparser
 app = Flask(__name__)
 
@@ -14,6 +15,27 @@ line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 parser = WebhookParser(channel_secret)
 
+machine = TocMachine(
+    states=["user", "state1", "state2"],
+    transitions=[
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "state1",
+            "conditions": "is_going_to_state1",
+        },
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "state2",
+            "conditions": "is_going_to_state2",
+        },
+        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+    ],
+    initial="user",
+    auto_transitions=False,
+    show_conditions=True,
+)
 # 接收 LINE 的資訊
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -41,6 +63,7 @@ def callback():
             event.reply_token, TextSendMessage(text=event.message.text)
         )
     return 'OK'
+
 # @handler.add(MessageEvent, message=TextMessage)
 # def handle_message(event):
 #     msg = event.message.text
