@@ -32,7 +32,33 @@ def handle_message(event):
     #print(type(msg))
     msg = msg.encode('utf-8')
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+        if event.message.text == "哈囉":
+            line_bot_api.reply_message(  # 回復傳入的訊息文字
+                        event.reply_token,
+                        TemplateSendMessage(
+                            alt_text='Buttons template',
+                            template=ButtonsTemplate(
+                                title='Menu',
+                                text='請選擇地區',
+                                actions=[
+                                    MessageTemplateAction(
+                                        label='台北市',
+                                        text='台北市'
+                                    ),
+                                    MessageTemplateAction(
+                                        label='台中市',
+                                        text='台中市'
+                                    ),
+                                    MessageTemplateAction(
+                                        label='高雄市',
+                                        text='高雄市'
+                                    )
+                                ]
+                            )
+                        )
+                    )
+        else:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
 
 # 學你說話
 # stage=["type","location"]
