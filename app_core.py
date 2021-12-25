@@ -23,7 +23,7 @@ def callback():
     signature = request.headers['X-Line-Signature']
 
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    #app.logger.info("Request body: " + body)
 
     try:
         handler.handle(body, signature)
@@ -46,6 +46,7 @@ def handle_message(event):
             line_bot_api.reply_message(
                 event.reply_token,ImageSendMessage(
                     original_content_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png",
+                    preview_image_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png"
                 )
             )
         elif event.message.text == "影片":
