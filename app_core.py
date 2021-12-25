@@ -30,8 +30,10 @@ def handle_message(event):
     msg = event.message.text
     #print(type(msg))
     msg = msg.encode('utf-8')
+    flag=False
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
         if event.message.text == "選單":
+            flag=True
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                         event.reply_token,
                         TemplateSendMessage(
@@ -61,6 +63,7 @@ def handle_message(event):
                         )
                     )
         elif(event.message.text=="中式"):
+            flag=True
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                         event.reply_token,
                         TemplateSendMessage(
@@ -89,8 +92,8 @@ def handle_message(event):
                             )
                         )
                     )
-        else:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+        if(flag!=True):
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="抱歉，您輸入的文字還不能對應當前的stage"))
 
 # 學你說話
 # stage=["type","location"]
