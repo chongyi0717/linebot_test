@@ -11,7 +11,7 @@ from utils import send_text_message
 import configparser
 app = Flask(__name__)
 
-load_dotenv()
+#load_dotenv()
 # machine = TocMachine(
 #     states=["user", "state1", "state2"],
 #     transitions=[
