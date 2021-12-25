@@ -1,15 +1,18 @@
-from __future__ import unicode_literals
-import os
+from chatbase import Message
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
+
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
 from linebot.models import *
-import configparser
 
-import urllib
-import re
+import requests 
+from bs4 import BeautifulSoup
+from urllib.request import urlretrieve
 import random
-
 app = Flask(__name__)
 
 # LINE 聊天機器人的基本資料
@@ -29,21 +32,72 @@ def callback():
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
-
     return 'OK'
 
-# 學你說話
-stage=["type","location"]
-current_stage=0
+def movie():
+    target_url = 'https://movies.yahoo.com.tw/'
+    print('Start parsing movie ...')
+    rs = requests.session()
+    res = rs.get(target_url, verify=False)
+    res.encoding = 'utf-8'
+    soup = BeautifulSoup(res.text, 'html.parser')   
+    content = ""
+    for index, data in enumerate(soup.select('div.movielist_info h1 a')):
+        if index == 20:
+            return content
+        print("data：")
+        print(index)
+        print(data)        
+        title = data.text
+        link =  data['href']
+        content += '{}\n{}\n'.format(title, link)
+    return content
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    msg=event.message.text
-    msg=msg.encode("utf-8")
-    if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        if event.message.text == "文字":
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
-        elif event.message.text == "貼圖":
-            line_bot_api.reply_message(event.reply_token,StickerSendMessage(package_id=1, sticker_id=2))
+    msg = event.message.text
+    #print(type(msg))
+    msg = msg.encode('utf-8')
+    if event.message.text == "最新電影":
+    #加上傳送至Chatbase的程式
+        chatbase_msg = Message(api_key="",
+              type="user",
+              platform="Line",
+              version="1.0",
+              user_id="",
+              message=event.message.text,
+              intent="movie"
+              )
+        resp =chatbase_msg.send()
+        print(resp)
+        a=movie()
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=a))
+    if event.message.text == "你好":
+    #加上傳送至Chatbase的程式
+        chatbase_msg = Message(api_key="",
+              type="user",
+              platform="Line",
+              version="1.0",
+              user_id="",
+              message=event.message.text,
+              intent="Hello"
+              )
+        resp =chatbase_msg.send()
+        print(resp)
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+
+# 學你說話
+# stage=["type","location"]
+# current_stage=0
+# @handler.add(MessageEvent, message=TextMessage)
+# def handle_message(event):
+#     msg=event.message.text
+#     msg=msg.encode("utf-8")
+#     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
+#         if event.message.text == "文字":
+#             line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+#         elif event.message.text == "貼圖":
+#             line_bot_api.reply_message(event.reply_token,StickerSendMessage(package_id=random.randint(1,10), sticker_id=random.randint(1,10)))
 
 if __name__ == "__main__":
     app.run()
