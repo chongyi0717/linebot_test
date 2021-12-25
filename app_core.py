@@ -4,7 +4,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
-
+from fsm import TocMachine
 import configparser
 app = Flask(__name__)
 
