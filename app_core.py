@@ -3,8 +3,7 @@ import os
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
-
+from linebot.models import *
 import configparser
 
 import urllib
@@ -35,25 +34,24 @@ def callback():
 
 # 學你說話
 @handler.add(MessageEvent, message=TextMessage)
-def pixabay_isch(event):
-    
+def handle_message(event):
+    msg=event.message.text
+    msg=msg.encode("utf-8")
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        try:
+        if event.message.text == "文字":
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=event.message.text))
+        elif event.message.text == "貼圖":
+            line_bot_api.reply_message(event.reply_token,StickerSendMessage(package_id=1, sticker_id=2))
+        elif(event.message.text == "圖片"):
             line_bot_api.reply_message(
-                event.reply_token,
-                ImageSendMessage(
-                    type="image",
+                event.reply_token,ImageSendMessage(
                     original_content_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png",
                     preview_image_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png"
                 )
             )
-        # 如果找不到圖，就學你說話
-        except:
-            line_bot_api.reply_message(
-                event.reply_token,
-                TextSendMessage(text=event.message.text)
-            )
-            pass
+        elif event.message.text == "影片":
+            line_bot_api.reply_message(event.reply_token,VideoSendMessage(original_content_url='https://www.youtube.com/watch?v=tLQLa6lM3Us&list=RDEM-pq0c1ZaSXRbQBZmXKqOzg&start_radio=1&ab_channel=AimerOfficialYouTubeChannel', 
+            preview_image_url='https://www.youtube.com/watch?v=tLQLa6lM3Us&list=RDEM-pq0c1ZaSXRbQBZmXKqOzg&start_radio=1&ab_channel=AimerOfficialYouTubeChannel'))
 
 if __name__ == "__main__":
     app.run()
