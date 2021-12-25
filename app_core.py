@@ -43,8 +43,8 @@ def pixabay_isch(event):
                 event.reply_token,
                 ImageSendMessage(
                     type="image",
-                    original_content_url="https://www.reddit.com/r/fatestaynight/comments/lgxnjz/fatestay_night_heavens_feel_iii_bddvd_sakura/",
-                    preview_image_url="https://www.reddit.com/r/fatestaynight/comments/lgxnjz/fatestay_night_heavens_feel_iii_bddvd_sakura/"
+                    original_content_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png",
+                    preview_image_url="https://github.com/chongyi0717/wireless_project/blob/master/distribution.png"
                 )
             )
         # 如果找不到圖，就學你說話
