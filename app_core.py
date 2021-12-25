@@ -6,8 +6,8 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
-from fsm import TocMachine
-from utils import send_text_message
+# from fsm import TocMachine
+# from utils import send_text_message
 import configparser
 app = Flask(__name__)
 
