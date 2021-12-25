@@ -42,8 +42,8 @@ def pixabay_isch(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 ImageSendMessage(
-                    original_content_url="https://www.google.com/search?q=fate+sakura&sxsrf=AOaemvKLA-I9x0zNksjV8y8xrlEf2-dMkA:1640420239020&source=lnms&tbm=isch&sa=X&ved=2ahUKEwidy4PNwf70AhXaZt4KHSEmCCMQ_AUoAXoECAIQAw&biw=1536&bih=722&dpr=1.25#imgrc=rEr2TX3Ee3FdsM",
-                    preview_image_url="https://www.google.com/search?q=fate+sakura&sxsrf=AOaemvKLA-I9x0zNksjV8y8xrlEf2-dMkA:1640420239020&source=lnms&tbm=isch&sa=X&ved=2ahUKEwidy4PNwf70AhXaZt4KHSEmCCMQ_AUoAXoECAIQAw&biw=1536&bih=722&dpr=1.25#imgrc=rEr2TX3Ee3FdsM"
+                    original_content_url="https://www.reddit.com/r/fatestaynight/comments/lgxnjz/fatestay_night_heavens_feel_iii_bddvd_sakura/",
+                    preview_image_url="https://www.reddit.com/r/fatestaynight/comments/lgxnjz/fatestay_night_heavens_feel_iii_bddvd_sakura/"
                 )
             )
         # 如果找不到圖，就學你說話
