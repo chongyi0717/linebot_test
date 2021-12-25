@@ -42,8 +42,8 @@ def pixabay_isch(event):
             line_bot_api.reply_message(
                 event.reply_token,
                 ImageSendMessage(
-                    original_content_url="https://github.com/chongyi0717/wireless_project/blob/master/call_time_distribution.png",
-                    preview_image_url="https://github.com/chongyi0717/wireless_project/blob/master/call_time_distribution.png"
+                    original_content_url="https://www.google.com/search?q=fate+sakura&sxsrf=AOaemvKLA-I9x0zNksjV8y8xrlEf2-dMkA:1640420239020&source=lnms&tbm=isch&sa=X&ved=2ahUKEwidy4PNwf70AhXaZt4KHSEmCCMQ_AUoAXoECAIQAw&biw=1536&bih=722&dpr=1.25#imgrc=pV2v4AvfhHyEHM",
+                    preview_image_url="https://www.google.com/search?q=fate+sakura&sxsrf=AOaemvKLA-I9x0zNksjV8y8xrlEf2-dMkA:1640420239020&source=lnms&tbm=isch&sa=X&ved=2ahUKEwidy4PNwf70AhXaZt4KHSEmCCMQ_AUoAXoECAIQAw&biw=1536&bih=722&dpr=1.25#imgrc=pV2v4AvfhHyEHM"
                 )
             )
         # 如果找不到圖，就學你說話
