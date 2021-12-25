@@ -19,20 +19,19 @@ def callback():
 
     body = request.get_data(as_text=True)
     #app.logger.info("Request body: " + body)
-    current_stage="nothing"
+    
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
     #print(type(msg))
     msg = msg.encode('utf-8')
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        if event.message.text == "選單" and current_stage=="nothing":
+        if event.message.text == "選單":
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                         event.reply_token,
                         TemplateSendMessage(
@@ -61,8 +60,7 @@ def handle_message(event):
                             )
                         )
                     )
-            current_stage="樣式"
-        elif(current_stage =="樣式" and event.message.text=="中式"):
+        elif(event.message.text=="中式"):
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                         event.reply_token,
                         TemplateSendMessage(
@@ -108,4 +106,5 @@ def handle_message(event):
 #             line_bot_api.reply_message(event.reply_token,StickerSendMessage(package_id=random.randint(1,10), sticker_id=random.randint(1,10)))
 
 if __name__ == "__main__":
+    current_stage="nothing"
     app.run()
