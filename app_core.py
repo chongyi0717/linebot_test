@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 import os
+import sys
+from dotenv import load_dotenv
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError
@@ -8,6 +10,7 @@ from fsm import TocMachine
 import configparser
 app = Flask(__name__)
 
+load_dotenv()
 machine = TocMachine(
     states=["user", "state1", "state2"],
     transitions=[
