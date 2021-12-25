@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import os
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
+from linebot import LineBotApi, WebhookHandler,WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
 import configparser
@@ -12,7 +12,7 @@ channel_access_token='ToflcXGuE9cm5WmDysvWWVPSSM2KCRe8k7bVP5EjF12yuXqqBSorgzDsEb
 channel_secret='5186fcb8bf05dc424db1e061775f4239'
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
-
+parser = WebhookParser(channel_secret)
 
 # 接收 LINE 的資訊
 @app.route("/callback", methods=['POST'])
