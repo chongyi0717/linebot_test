@@ -19,7 +19,7 @@ def callback():
 
     body = request.get_data(as_text=True)
     #app.logger.info("Request body: " + body)
-
+    current_stage="nothing"
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
@@ -32,26 +32,60 @@ def handle_message(event):
     #print(type(msg))
     msg = msg.encode('utf-8')
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        if event.message.text == "哈囉":
+        if event.message.text == "選單" and current_stage=="nothing":
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                         event.reply_token,
                         TemplateSendMessage(
-                            alt_text='Buttons template',
+                            alt_text='Menu',
                             template=ButtonsTemplate(
                                 title='Menu',
-                                text='請選擇地區',
+                                text='今天想吃什麼樣的餐點呢？',
                                 actions=[
                                     MessageTemplateAction(
-                                        label='台北市',
-                                        text='台北市'
+                                        label='中式',
+                                        text='中式'
                                     ),
                                     MessageTemplateAction(
-                                        label='台中市',
-                                        text='台中市'
+                                        label='台式',
+                                        text='台式'
                                     ),
                                     MessageTemplateAction(
-                                        label='高雄市',
-                                        text='高雄市'
+                                        label='美式',
+                                        text='美式'
+                                    ),
+                                    MessageTemplateAction(
+                                        label='越式',
+                                        text='越式'
+                                    )
+                                ]
+                            )
+                        )
+                    )
+            current_stage="樣式"
+        elif(current_stage =="樣式" and event.message.text=="中式"):
+            line_bot_api.reply_message(  # 回復傳入的訊息文字
+                        event.reply_token,
+                        TemplateSendMessage(
+                            alt_text='Menu',
+                            template=ButtonsTemplate(
+                                title='Menu',
+                                text='今天想吃什麼樣的餐點呢？',
+                                actions=[
+                                    MessageTemplateAction(
+                                        label='中式',
+                                        text='中式'
+                                    ),
+                                    MessageTemplateAction(
+                                        label='台式',
+                                        text='台式'
+                                    ),
+                                    MessageTemplateAction(
+                                        label='美式',
+                                        text='美式'
+                                    ),
+                                    MessageTemplateAction(
+                                        label='越式',
+                                        text='越式'
                                     )
                                 ]
                             )
