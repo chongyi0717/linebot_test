@@ -1,40 +1,16 @@
 from __future__ import unicode_literals
+import os
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler,WebhookParser
+from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import *
-from fsm import TocMachine
+import configparser
 app = Flask(__name__)
 
-
-machine = TocMachine(
-    states=["user", "state1", "state2"],
-    transitions=[
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
-        },
-        {
-            "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
-        },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
-    ],
-    initial="user",
-    auto_transitions=False,
-    show_conditions=True,
-)
-
 # LINE 聊天機器人的基本資料
-channel_secret='5186fcb8bf05dc424db1e061775f4239'
-channel_access_token='ToflcXGuE9cm5WmDysvWWVPSSM2KCRe8k7bVP5EjF12yuXqqBSorgzDsEbxrSFp3ZL5KCTuZGXFyYvHht1sWd2AZMrbyYB1Po+yjWgDjSzBrBAkB43RDeuk6FhH12Kvv1s1YNF3QfVv1TBZAcjG6XwdB04t89/1O/w1cDnyilFU='
-line_bot_api = LineBotApi(channel_access_token)
-parser=WebhookParser(channel_secret)
-handler=WebhookHandler(channel_secret)
+line_bot_api = LineBotApi('ToflcXGuE9cm5WmDysvWWVPSSM2KCRe8k7bVP5EjF12yuXqqBSorgzDsEbxrSFp3ZL5KCTuZGXFyYvHht1sWd2AZMrbyYB1Po+yjWgDjSzBrBAkB43RDeuk6FhH12Kvv1s1YNF3QfVv1TBZAcjG6XwdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('5186fcb8bf05dc424db1e061775f4239')
+
 
 # 接收 LINE 的資訊
 @app.route("/callback", methods=['POST'])
@@ -49,7 +25,6 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-    
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
